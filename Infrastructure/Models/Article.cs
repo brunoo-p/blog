@@ -18,11 +18,11 @@ namespace blog.Infrastructure.Models
 
         public Category Category { get; set; } = null;
 
-        public Comments[] Comments { get; set; } = null;
+        public Comment[] Comments { get; set; } = null;
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; private set; } = false;
 
-        public Article( Author author, string title, string description, string text, Category category = null, Comments[] comments = null)
+        public Article( Author author, string title, string description, string text, Category category = null, Comment[] comments = null)
         {
             Author = author;
             Title = title;

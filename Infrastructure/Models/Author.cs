@@ -17,7 +17,7 @@ namespace blog.Infrastructure.Models
         [Required]
         public string Email { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; private set; } = false;
 
         public Author(string firstName, string lastName, int age, string email)
         {

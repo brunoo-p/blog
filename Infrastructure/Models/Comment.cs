@@ -2,14 +2,14 @@
 
 namespace blog.Infrastructure.Models
 {
-    public class Comments : Base
+    public class Comment : Base
     {
         [Required]
         public string Text { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; private set; } = false;
 
-        public Comments(string text)
+        public Comment(string text)
         {
             Text = text;
         }

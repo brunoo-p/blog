@@ -10,7 +10,7 @@ namespace blog.Infrastructure.Models
         [Required]
         public string Type { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; private set; } = false;
 
         public Category( string name, string type )
         {
