@@ -1,13 +1,11 @@
+using blog.Domain.Repositories;
+using blog.Infrastructure.Interfaces;
+using blog.Infrastructure.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace blog
 {
@@ -24,6 +22,11 @@ namespace blog
         public void ConfigureServices( IServiceCollection services )
         {
             services.AddControllersWithViews();
+
+            services.AddScoped<IArticle, ArticleRepository>();
+            services.AddScoped<IGenericInterface<Author>, AuthorRepository>();
+            services.AddScoped<IGenericInterface<Comment>, CommentRepository>();
+            services.AddScoped<IGenericInterface<Category>, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
