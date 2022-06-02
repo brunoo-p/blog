@@ -1,6 +1,7 @@
 ﻿using blog.Infrastructure.Interfaces;
 using blog.Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace blog.Controllers
 {
@@ -16,8 +17,8 @@ namespace blog.Controllers
             _repository = repository;
         }
 
-
         [HttpGet]
+        [SwaggerOperation(Summary = "List all articles", Description = "Get all articles registered on the database")]
         public ActionResult GetAll()
         {
             string name = _repository.GetAll();
