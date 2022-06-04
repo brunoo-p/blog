@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace blog.Infrastructure.Models
+namespace blog.Infrastructure.Models.Dtos
 {
-    public class Author : Base
+    public class AuthorDto
     {
-
         [BsonRequired]
         [Required]
         public string FirstName { get; set; }
@@ -22,8 +21,7 @@ namespace blog.Infrastructure.Models
         [Required]
         public string Email { get; set; }
 
-        public bool IsDeleted { get; private set; } = false;
-        public Author(string firstName, string lastName, int age, string email)
+        public AuthorDto( string firstName, string lastName, int age, string email )
         {
             FirstName = firstName;
             LastName = lastName;

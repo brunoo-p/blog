@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace blog.Infrastructure.Models
+namespace blog.Infrastructure.Models.Dtos
 {
-    public class Category : Base
+    public class CategoryDto
     {
         [BsonRequired]
         [Required]
@@ -13,14 +13,10 @@ namespace blog.Infrastructure.Models
         [Required]
         public string Type { get; set; }
 
-        public bool IsDeleted { get; private set; } = false;
-
-        public Category( string name, string type )
+        public CategoryDto(string name, string type)
         {
             Name = name;
             Type = type;
         }
-
-        public void Exclude() { IsDeleted = true; }
     }
 }
