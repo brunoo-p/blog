@@ -1,37 +1,55 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace blog.Infrastructure.Models
 {
     public class Article : Base
     {
+        [BsonRequired]
         [Required]
-        public Author Author { get; set; }
+        public string AuthorId { get; set; }
 
+        [BsonRequired]
         [Required]
         public string Title { get; set; }
 
+        [BsonRequired]
         [Required]
         public string Description { get; set; }
 
+        [BsonRequired]
         [Required]
         public string Text { get; set; }
 
-        public Category Category { get; set; } = null;
+        public string CategoryName { get; set; } = null;
 
-        public Comment[] Comments { get; set; } = null;
+        public List<Comment> Comments { get; set; } = null;
 
-        public bool IsDeleted { get; private set; } = false;
+        public bool IsDeleted { get; set; } = false;
 
-        public Article( Author author, string title, string description, string text, Category category = null, Comment[] comments = null)
+        public Article( string authorId, string title, string description, string text, string categoryName = null)
         {
-            Author = author;
+            AuthorId = authorId;
             Title = title;
             Description = description;
             Text = text;
-            Category = category;
+            CategoryName = categoryName;
+        }
+        public Article( string id, string authorId, string title, string description, string text, string categoryName = null, List<Comment> comments = null )
+        {
+            Id = id;
+            AuthorId = authorId;
+            Title = title;
+            Description = description;
+            Text = text;
+            CategoryName = categoryName;
             Comments = comments;
         }
-
-        public void Exclude() { IsDeleted = true; }
+        public Article()
+        {
+      
+        }
     }
 }

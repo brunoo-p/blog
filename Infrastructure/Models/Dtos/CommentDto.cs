@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace blog.Infrastructure.Models
+namespace blog.Infrastructure.Models.Dtos
 {
-    public class Comment : Base
+    public class CommentDto
     {
         [BsonRequired]
         [Required]
@@ -13,9 +13,7 @@ namespace blog.Infrastructure.Models
         [Required]
         public string Text { get; set; }
 
-        public bool IsDeleted { get; private set; } = false;
-
-        public Comment(string articleId, string text)
+        public CommentDto( string articleId, string text )
         {
             ArticleId = articleId;
             Text = text;

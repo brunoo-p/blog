@@ -1,6 +1,8 @@
 using blog.Domain.Repositories;
+using blog.Infrastructure.Database;
 using blog.Infrastructure.Interfaces;
 using blog.Infrastructure.Models;
+using blog.Infrastructure.Models.Dtos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,10 +30,12 @@ namespace blog
         {
             services.AddControllersWithViews();
 
+            services.AddScoped<DbContext>();
+
             services.AddScoped<IArticle, ArticleRepository>();
-            services.AddScoped<IGenericInterface<Author>, AuthorRepository>();
-            services.AddScoped<IGenericInterface<Comment>, CommentRepository>();
-            services.AddScoped<IGenericInterface<Category>, CategoryRepository>();
+            services.AddScoped<IAuthor, AuthorRepository>();
+            services.AddScoped<IComment, CommentRepository> ();
+            services.AddScoped<ICategory, CategoryRepository>();
 
             services.AddSwaggerGen(c => 
             {
