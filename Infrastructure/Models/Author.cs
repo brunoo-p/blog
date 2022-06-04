@@ -30,5 +30,13 @@ namespace blog.Infrastructure.Models
             Age = age;
             Email = email;
         }
+        public Author( string id, string firstName, string lastName, int age, string email )
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Age = age;
+            Email = email;
+        }
     }
 }
