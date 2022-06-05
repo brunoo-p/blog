@@ -62,7 +62,7 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                bool existInCollection = CorfirmIsNotDeleted(id);
+                bool existInCollection = ConfirmIsNotDeleted(id);
                 if ( !existInCollection )
                 {
                     return false;
@@ -112,7 +112,8 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                return _collection.Find(_ => _.IsDeleted == false).FirstOrDefault();
+                return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
+                    
             }
             catch ( Exception ex )
             {
@@ -121,7 +122,7 @@ namespace blog.Domain.Repositories
         }
 
 
-        private bool CorfirmIsNotDeleted( string id )
+        private bool ConfirmIsNotDeleted( string id )
         {
             try
             {

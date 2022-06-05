@@ -20,6 +20,7 @@ namespace blog.Controllers
         [HttpPost]
         [Produces("application/json")]
         [SwaggerOperation(Summary = "Create new comment", Description = "Add new comment an article")]
+        [ProducesResponseType(typeof(Comment), 200)]
 
         public ActionResult Add( [FromBody] CommentDto comment )
         {
@@ -30,7 +31,8 @@ namespace blog.Controllers
         [HttpPut]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Update an comment", Description = "Select comment by ID to update")]
-
+        [ProducesResponseType(typeof(Comment), 200)]
+        
         public ActionResult Update( string id, CommentDto comment )
         {
             var updated = _repository.Edit(id, comment);
@@ -41,6 +43,7 @@ namespace blog.Controllers
         [HttpDelete]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Flag to deleted", Description = "Set commentary with a flag to deleted")]
+         [ProducesResponseType(typeof(bool), 200)]
 
         public ActionResult FlagDelete( string id )
         {

@@ -1,4 +1,5 @@
-﻿using blog.Infrastructure.Interfaces;
+﻿using System.Collections.Generic;
+using blog.Infrastructure.Interfaces;
 using blog.Infrastructure.Models;
 using blog.Infrastructure.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace blog.Controllers
 
         [HttpGet]
         [SwaggerOperation(Summary = "List all categories", Description = "Get all categories registered on the database")]
+        [ProducesResponseType(typeof(List<Category>), 200)]
 
         public ActionResult GetAll()
         {
@@ -34,7 +36,7 @@ namespace blog.Controllers
         [HttpGet]
         [Route("listArticles/{nameCategory}")]
         [SwaggerOperation(Summary = "List all articles", Description = "Get all articles linked this category name")]
-
+        [ProducesResponseType(typeof(List<Article>), 200)]
         public ActionResult GetAllArticle_WithCategoryName(string nameCategory)
         {
             var list = _repository.GetAllArticleByCategory(nameCategory);
@@ -49,7 +51,7 @@ namespace blog.Controllers
         [HttpPost]
         [Produces("application/json")]
         [SwaggerOperation(Summary = "Create new category", Description = "Add new category to database")]
-
+        [ProducesResponseType(typeof(Category), 200)]
         public ActionResult Add( [FromBody] CategoryDto category)
         {
             var newCategory= _repository.Add(category);
@@ -60,7 +62,7 @@ namespace blog.Controllers
         [HttpDelete]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Flag to delete", Description = "Set article with a flag to deleted")]
-
+        [ProducesResponseType(typeof(bool), 200)]
         public ActionResult FlagDelete( string id )
         {
             var deleted = _repository.Delete(id);

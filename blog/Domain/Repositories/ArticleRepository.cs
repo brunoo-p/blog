@@ -82,7 +82,7 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                bool existInCollection = CorfirmIsNotDeleted(id);
+                bool existInCollection = ConfirmIsNotDeleted(id);
                 if ( !existInCollection )
                 {
                     return false;
@@ -126,7 +126,7 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                var article = _collection.Find(_ => _.Id == id).FirstOrDefault();
+                var article = _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
                 var comments = ListComments(id);
 
                 return new Article(
@@ -166,7 +166,7 @@ namespace blog.Domain.Repositories
             }
         }
 
-        private bool CorfirmIsNotDeleted( string id )
+        private bool ConfirmIsNotDeleted( string id )
         {
             try
             {
