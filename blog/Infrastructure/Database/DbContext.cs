@@ -11,7 +11,7 @@ namespace blog.Infrastructure.Database
             try
             {
 
-                var client = new MongoClient("mongodb+srv://brunoo-p:false@cluster.oyyye.mongodb.net/?retryWrites=true&w=majority");
+                var client = new MongoClient("mongodb://root:exemple@mongo");
                 database = client.GetDatabase("Blog");
 
             }catch ( Exception ex )
