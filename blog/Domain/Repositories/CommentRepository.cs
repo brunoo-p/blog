@@ -74,7 +74,7 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
+                 return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
             }
             catch ( Exception ex )
             {

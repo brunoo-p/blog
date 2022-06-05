@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace blog.Infrastructure.Models
@@ -27,6 +28,7 @@ namespace blog.Infrastructure.Models
 
         public List<Comment> Comments { get; set; } = null;
 
+        [DefaultValue(false)]
         public bool IsDeleted { get; set; } = false;
 
         public Article( string authorId, string title, string description, string text, string categoryName = null)

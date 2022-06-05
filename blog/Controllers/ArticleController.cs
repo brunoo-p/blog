@@ -1,4 +1,6 @@
-﻿using blog.Infrastructure.Interfaces;
+﻿using System.Collections.Generic;
+using blog.Infrastructure.Interfaces;
+using blog.Infrastructure.Models;
 using blog.Infrastructure.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -19,6 +21,7 @@ namespace blog.Controllers
 
         [HttpGet]
         [SwaggerOperation(Summary = "List all articles", Description = "Get all articles registered on the database")]
+         [ProducesResponseType(typeof(List<Article>), 200)]
 
         public ActionResult GetAll()
         {
@@ -32,6 +35,7 @@ namespace blog.Controllers
         [HttpGet]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Find article by ID", Description = "Get article searching by ID")]
+        [ProducesResponseType(typeof(Article), 200)]
 
         public ActionResult GetById( string id )
         {
@@ -47,6 +51,7 @@ namespace blog.Controllers
         [HttpPost]
         [Produces("application/json")]
         [SwaggerOperation(Summary = "Create new article", Description  = "Add new article to database")]
+        [ProducesResponseType(typeof(Article), 200)]
 
         public ActionResult Add([FromBody] ArticleDto article)
         {
@@ -57,6 +62,7 @@ namespace blog.Controllers
         [HttpPut]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Update an article", Description = "Select article by ID to update")]
+        [ProducesResponseType(typeof(Article), 200)]
 
         public ActionResult Update( string id, ArticleDto article )
         {
@@ -67,6 +73,7 @@ namespace blog.Controllers
         [HttpPut]
         [Route("{id}/updateCategory")]
         [SwaggerOperation(Summary = "Update the category", Description = "Update the article category")]
+        [ProducesResponseType(typeof(Article), 200)]
 
         public ActionResult UpdateCategory( string id, [FromBody] CategoryDto categoryName)
         {
@@ -78,6 +85,7 @@ namespace blog.Controllers
         [HttpDelete]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Flag to deleted", Description = "Set article with a flag to deleted")]
+        [ProducesResponseType(typeof(bool), 200)]
 
         public ActionResult FlagDelete( string id )
         {

@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace blog.Infrastructure.Models
@@ -22,6 +23,7 @@ namespace blog.Infrastructure.Models
         [Required]
         public string Email { get; set; }
 
+        [DefaultValue(false)]
         public bool IsDeleted { get; private set; } = false;
         public Author(string firstName, string lastName, int age, string email)
         {
@@ -30,13 +32,14 @@ namespace blog.Infrastructure.Models
             Age = age;
             Email = email;
         }
-        public Author( string id, string firstName, string lastName, int age, string email )
+        public Author( string id, string firstName, string lastName, int age, string email, bool isDeleted = false )
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
             Age = age;
             Email = email;
+            IsDeleted = isDeleted;
         }
     }
 }
