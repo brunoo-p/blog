@@ -25,9 +25,9 @@ namespace blog.Domain.Repositories
         public List<Category> GetAll()
         {
             return _collection.Find(Builders<Category>.Filter
-                        .Where(_ => _.IsDeleted == false))
-                        .SortBy(_ => _.Type)
-                        .ToList();
+                    .Where(_ => _.IsDeleted == false))
+                    .SortBy(_ => _.Type)
+                    .ToList();
         }
         public Category Add( CategoryDto entity )
         {
@@ -92,7 +92,11 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                 return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
+                var isValidID = Base.VerifyLengthId(id);
+                if(!isValidID){
+                    return null;
+                }
+                return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
             }
             catch ( Exception ex )
             {

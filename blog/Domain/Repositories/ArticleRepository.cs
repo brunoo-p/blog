@@ -59,6 +59,10 @@ namespace blog.Domain.Repositories
         {
             try
             {
+                var isValidID = Base.VerifyLengthId(entity.AuthorId);
+                if(!isValidID){
+                    return null;
+                }
                 var article = new Article(
                     entity.AuthorId,
                     entity.Title,
@@ -126,7 +130,16 @@ namespace blog.Domain.Repositories
         {
             try
             {
+                var isValidID = Base.VerifyLengthId(id);
+                if(!isValidID){
+                    return null;
+                }
+
                 var article = _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
+                
+                if(article == null) {
+                    return null;
+                }
                 var comments = ListComments(id);
 
                 return new Article(
@@ -197,6 +210,7 @@ namespace blog.Domain.Repositories
                 throw new Exception($"{ex}");
             }
         }
+        
 
     }
 }

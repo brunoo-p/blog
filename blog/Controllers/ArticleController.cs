@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using blog.Infrastructure.Interfaces;
 using blog.Infrastructure.Models;
 using blog.Infrastructure.Models.Dtos;
+using blog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -21,20 +23,18 @@ namespace blog.Controllers
 
         [HttpGet]
         [SwaggerOperation(Summary = "List all articles", Description = "Get all articles registered on the database")]
-         [ProducesResponseType(typeof(List<Article>), 200)]
+        [ProducesResponseType(typeof(List<Article>), 200)]
 
         public ActionResult GetAll()
         {
             var list = _repository.GetAll();
-            if (list == null) {
-                return Ok("First you need register an article");
-            }
             return Ok(list);
         }
 
         [HttpGet]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Find article by ID", Description = "Get article searching by ID")]
+        [ProducesResponseType(typeof(MessageResponse), 403)]
         [ProducesResponseType(typeof(Article), 200)]
 
         public ActionResult GetById( string id )
@@ -42,7 +42,7 @@ namespace blog.Controllers
             var article = _repository.GetById(id);
             if ( article == null )
             {
-                return StatusCode(404, "Not Found article");
+                return StatusCode(403, MessageResponse.mapError(HttpStatusCode.Forbidden, "This article don't exist yet."));
             }
 
             return Ok(article);
@@ -51,11 +51,17 @@ namespace blog.Controllers
         [HttpPost]
         [Produces("application/json")]
         [SwaggerOperation(Summary = "Create new article", Description  = "Add new article to database")]
+        [ProducesResponseType(typeof(MessageResponse), 400)]
         [ProducesResponseType(typeof(Article), 200)]
 
         public ActionResult Add([FromBody] ArticleDto article)
         {
             var newArticle = _repository.Add(article);
+            
+            if (newArticle == null) {
+                return StatusCode(400, MessageResponse.mapError(HttpStatusCode.Forbidden, "Invalid authorId"));
+            }
+
             return Ok(newArticle);
         }
 
@@ -67,10 +73,13 @@ namespace blog.Controllers
         public ActionResult Update( string id, ArticleDto article )
         {
             var updated = _repository.Edit(id, article);
+            if (updated == null) {
+                return StatusCode(400, MessageResponse.mapError(HttpStatusCode.BadRequest, "Invalid Id"));
+            }
             return Ok(updated);
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("{id}/updateCategory")]
         [SwaggerOperation(Summary = "Update the category", Description = "Update the article category")]
         [ProducesResponseType(typeof(Article), 200)]

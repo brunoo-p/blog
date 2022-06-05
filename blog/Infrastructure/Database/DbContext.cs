@@ -10,13 +10,12 @@ namespace blog.Infrastructure.Database
         {
             try
             {
-
                 var client = new MongoClient("mongodb://root:exemple@mongo");
                 database = client.GetDatabase("Blog");
 
             }catch ( Exception ex )
             {
-                throw new MongoException("It wasn't possible connect to datase", ex);  
+                throw new MongoException("It wasn't possible connect to database", ex);  
             }
         }
     }

@@ -112,6 +112,10 @@ namespace blog.Domain.Repositories
         {
             try
             {
+                var isValidID = Base.VerifyLengthId(id);
+                if(!isValidID){
+                    return null;
+                }
                 return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
                     
             }

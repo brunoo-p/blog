@@ -2,6 +2,7 @@
 using blog.Infrastructure.Interfaces;
 using blog.Infrastructure.Models;
 using blog.Infrastructure.Models.Dtos;
+using blog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -51,6 +52,7 @@ namespace blog.Controllers
         [HttpPost]
         [Produces("application/json")]
         [SwaggerOperation(Summary = "Create new category", Description = "Add new category to database")]
+        [ProducesResponseType(typeof(MessageResponse), 400)]
         [ProducesResponseType(typeof(Category), 200)]
         public ActionResult Add( [FromBody] CategoryDto category)
         {
