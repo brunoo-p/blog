@@ -22,6 +22,10 @@ namespace blog.Domain.Repositories
         {
             try
             {
+                var isValidID = Base.VerifyLengthId(entity.ArticleId);
+                if(!isValidID){
+                    return null;
+                }
                 var newComment = new Comment(
                     entity.ArticleId,
                     entity.Text
@@ -74,7 +78,11 @@ namespace blog.Domain.Repositories
         {
             try
             {
-                 return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
+                var isValidID = Base.VerifyLengthId(id);
+                if(!isValidID){
+                    return null;
+                }
+                return _collection.Find(_ => _.Id == id && _.IsDeleted == false).FirstOrDefault();
             }
             catch ( Exception ex )
             {

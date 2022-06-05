@@ -2,9 +2,11 @@
 using blog.Infrastructure.Interfaces;
 using blog.Infrastructure.Models;
 using blog.Infrastructure.Models.Dtos;
+using blog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Net;
 
 namespace blog.Controllers
 {
@@ -36,15 +38,15 @@ namespace blog.Controllers
         [HttpGet]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Find author by ID", Description = "Get author searching by ID")]
+        [ProducesResponseType(typeof(MessageResponse), 400)]
         [ProducesResponseType(typeof(Author), 200)]
-        [ProducesResponseType(500)]
 
         public ActionResult GetById( string id )
         {
             var author = _repository.GetById(id);
             if ( author == null )
             {
-                return StatusCode(404, "Not Found author");
+                return StatusCode(403, MessageResponse.mapError(HttpStatusCode.Forbidden, "This author don't exist yet."));
             }
 
             return Ok(author);
@@ -53,13 +55,14 @@ namespace blog.Controllers
         [HttpPost]
         [Produces("application/json")]
         [SwaggerOperation(Summary = "Create new author", Description = "Add new author to database")]
-        [ProducesResponseType(typeof(Author), 200)]
+        [ProducesResponseType(typeof(MessageResponse), 400)]
+        [ProducesResponseType(typeof(Author), 203)]
 
         public ActionResult Add( [FromBody] AuthorDto author )
         {
             bool valid = EmailValidator.Validate(author.Email);
             if(!valid) {
-                return StatusCode(403, "Invalid Email.");
+                return StatusCode(400, MessageResponse.mapError(HttpStatusCode.BadRequest, "Invalid email"));
             }
 
             var newAuthor = _repository.Add(author);
@@ -69,11 +72,15 @@ namespace blog.Controllers
         [HttpPut]
         [Route("{id}")]
         [SwaggerOperation(Summary = "Update an author", Description = "Select author by ID to update")]
+        [ProducesResponseType(typeof(MessageResponse), 400)]
         [ProducesResponseType(typeof(Author), 200)]
 
         public ActionResult Update( string id, AuthorDto author )
         {
             var updated = _repository.Edit(id, author);
+            if (updated == null) {
+                return StatusCode(400, MessageResponse.mapError(HttpStatusCode.BadRequest, "Invalid Id"));
+            }
             return Ok(updated);
         }
 
